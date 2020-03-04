@@ -1,12 +1,12 @@
 package com.singular.renting.service;
 
-import com.singular.renting.domain.Rental;
+import com.singular.renting.domain.PriceType;
 
 public class NewReleaseInitialPaymentCalculator implements RentalInitialPaymentCalculator {
 
     @Override
-    public Float getRentalInitialPrice(Rental rental) {
+    public Float getRentalInitialPrice(int days, PriceType priceType) {
 
-        return rental.getFilm().getPriceType().getValue() * rental.getDays();
+        return priceType.getValue() * days;
     }
 }

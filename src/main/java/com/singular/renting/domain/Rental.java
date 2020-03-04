@@ -14,9 +14,11 @@ public class Rental {
 
     private int days;
     private Date initialDate;
+    private Float price;
 
     @ManyToOne
     private Customer customer;
     @ManyToOne
     private Film film;
+
 }

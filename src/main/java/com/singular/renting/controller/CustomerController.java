@@ -24,7 +24,7 @@ public class CustomerController {
         this.assembler = assembler;
     }
 
-    @GetMapping("/Customer")
+    @GetMapping("/customers")
     public CollectionModel<EntityModel<Customer>> all() {
         List<EntityModel<Customer>> customers = repository.findAll().stream()
                 .map(assembler::toModel)
@@ -33,7 +33,7 @@ public class CustomerController {
                 linkTo(methodOn(CustomerController.class).all()).withSelfRel());
     }
 
-    @GetMapping("/Customer")
+    @GetMapping("/customer")
     public EntityModel<Customer> one(Long id) {
         Customer customer = repository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));

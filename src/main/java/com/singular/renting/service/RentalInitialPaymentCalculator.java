@@ -1,8 +1,8 @@
 package com.singular.renting.service;
 
-import com.singular.renting.domain.Rental;
+import com.singular.renting.domain.PriceType;
 
 public interface RentalInitialPaymentCalculator {
 
-    public Float getRentalInitialPrice(Rental rental);
+    Float getRentalInitialPrice(int days, PriceType priceType);
 }

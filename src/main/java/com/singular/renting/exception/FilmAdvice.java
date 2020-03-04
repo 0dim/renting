@@ -7,12 +7,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class FilmNotFoundAdvice {
+public class FilmAdvice {
 
     @ResponseBody
     @ExceptionHandler(FilmNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String filmNotFoundAdvice(FilmNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NotEnoughFilmsException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String notEnoughFilmsAdvice(NotEnoughFilmsException ex) {
         return ex.getMessage();
     }
 }

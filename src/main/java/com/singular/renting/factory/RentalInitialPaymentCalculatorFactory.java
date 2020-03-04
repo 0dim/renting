@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class RentalInitialPaymentCalculatorFactory {
 
-    public RentalInitialPaymentCalculator getInitialPaymentCalculator(Rental rental) {
+    public RentalInitialPaymentCalculator make(FilmType filmType) {
         RentalInitialPaymentCalculator calculator = null;
 
-        switch (rental.getFilm().getFilmType()){
+        switch (filmType){
             case NEW_RELEASE:
                 calculator = new NewReleaseInitialPaymentCalculator();
                 break;

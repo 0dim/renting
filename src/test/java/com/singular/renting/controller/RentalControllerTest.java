@@ -1,37 +1,56 @@
 package com.singular.renting.controller;
 
 import com.singular.renting.domain.Rental;
-import com.singular.renting.factory.RentalInitialPaymentCalculatorFactory;
-import com.singular.renting.repository.CustomerRepository;
-import com.singular.renting.repository.RentalRepository;
+import com.singular.renting.dto.RentalDTO;
 import com.singular.renting.resource.RentalAssembler;
-import com.singular.renting.service.RentalBonusPointsCalculator;
 import com.singular.renting.service.RentalService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 
-import static org.mockito.Mockito.times;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class RentalControllerTest {
 
     @Mock
     private RentalService rentalService;
+    @Mock
     private RentalAssembler assembler;
 
-    RentalController controller = new RentalController(
-            assembler,
-            rentalService
-    );
+    @InjectMocks
+    private RentalController controller;
 
     @Test
     public void isReturningANewRental() {
+        RentalDTO rentalDTO = new RentalDTO();
         Rental rental = new Rental();
-        ResponseEntity<EntityModel<Rental>> rentalEntity = controller.newRental(rental);
-        verify(rentalService).rent(rental);
-        // asser<< reponse
+
+        when(rentalService.rent(rentalDTO)).thenReturn(rental);
+        when(assembler.toModel(rental)).thenReturn(new EntityModel<>(rental));
+        ResponseEntity<EntityModel<Rental>> rentalEntity = controller.newRental(rentalDTO);
+
+        verify(rentalService).rent(rentalDTO);
+        assertEquals(rental,rentalEntity.getBody().getContent());
+    }
+
+    @Test
+    public void isFindingARental() {
+        Rental rental = new Rental();
+        Long id = 123L;
+        when(rentalService.getRental(id)).thenReturn(rental);
+        when(assembler.toModel(rental)).thenReturn(new EntityModel<>(rental));
+
+        EntityModel<Rental> rentalEntityModel = controller.one(id);
+
+        verify(rentalService).getRental(id);
+        assertEquals(rental, rentalEntityModel.getContent());
     }
 
 }

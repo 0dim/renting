@@ -26,7 +26,7 @@ public class FilmController {
         this.assembler = assembler;
     }
 
-    @GetMapping("/Film")
+    @GetMapping("/films")
     public CollectionModel<EntityModel<Film>> all() {
         List<EntityModel<Film>> films = repository.findAll().stream()
                 .map(assembler::toModel)
@@ -35,7 +35,7 @@ public class FilmController {
                 linkTo(methodOn(FilmController.class).all()).withSelfRel());
     }
 
-    @GetMapping("/Film")
+    @GetMapping("/film")
     public EntityModel<Film> one(Long id) {
         Film film = repository.findById(id)
                 .orElseThrow(() -> new FilmNotFoundException(id));
