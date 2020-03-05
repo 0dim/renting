@@ -15,7 +15,6 @@ public class Film {
     private @Id @GeneratedValue Long id;
 
     private String title;
-    private Float price;
     private int quantity;
     private FilmType filmType;
     private PriceType priceType;

@@ -39,4 +39,10 @@ public class RentalController {
                 .created(linkTo(methodOn(RentalController.class).one(rental.getId())).toUri())
                 .body(assembler.toModel(rental));
     }
+
+    @PostMapping("/return")
+    public ResponseEntity<EntityModel<Rental>> returnRental (@RequestBody RentalDTO rentalDTO) {
+
+        return null;
+    }
 }

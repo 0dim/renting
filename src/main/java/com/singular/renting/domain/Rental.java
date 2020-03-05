@@ -15,6 +15,8 @@ public class Rental {
     private int days;
     private Date initialDate;
     private Float price;
+    private int daysDelayed;
+    private Float surcharges;
 
     @ManyToOne
     private Customer customer;

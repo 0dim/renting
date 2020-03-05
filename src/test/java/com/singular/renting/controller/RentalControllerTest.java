@@ -53,4 +53,28 @@ public class RentalControllerTest {
         assertEquals(rental, rentalEntityModel.getContent());
     }
 
+
+    // return tests
+    @Test
+    public void itShouldHaveDaysDelayedAndSurchargesWhenRentalDelays() {
+
+        Rental rental;
+
+        // if there is a delay we calculate the price and update surcharges and days delayed
+        // update film inventory
+
+
+
+    }
+
+    @Test
+    public void itShouldHaveNoDaysDelayedAndSurchargesWhenRentalDoesntDelay() {
+
+        // if there is a delay we calculate the price and update surcharges and days delayed
+        // update film inventory
+
+
+
+    }
+
 }

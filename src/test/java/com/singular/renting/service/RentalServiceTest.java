@@ -14,7 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,12 +50,18 @@ public class RentalServiceTest {
         film.setPriceType(PriceType.BASIC);
         Customer customer = new Customer();
         customer.setBonusPoints(customerPoints);
+        Rental rentalMock = new Rental();
+        rentalMock.setInitialDate(new Date());
+        rentalMock.setDays(rentalDTO.getDays());
+        rentalMock.setFilm(film);
+        rentalMock.setCustomer(customer);
+//        rentalMock.setPrice(service.);
 
         when(filmRepository.findById(rentalDTO.getFilmId())).thenReturn(java.util.Optional.of(film));
         when(customerRepository.findById(rentalDTO.getCustomerId())).thenReturn(java.util.Optional.of(customer));
+        when(rentalRepository.save(any(Rental.class))).thenReturn(rentalMock);
 
         Rental rental = service.rent(rentalDTO);
-        // get movie and update inventory
 
         assertNotNull(rental);
 
@@ -65,6 +74,8 @@ public class RentalServiceTest {
 
         // calculate price
         assertEquals(5.0f, rental.getPrice());
+        assertEquals(rentalDTO.getDays(), rental.getDays());
+        assertEquals(5.0f, rental.getInitialDate());
     }
 
     @Test

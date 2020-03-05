@@ -14,6 +14,8 @@ import com.singular.renting.repository.FilmRepository;
 import com.singular.renting.repository.RentalRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class RentalService {
 
@@ -46,11 +48,17 @@ public class RentalService {
         Float price = calculator.getRentalInitialPrice(rentalDTO.getDays(), film.getPriceType());
 
         // return rental price
+        return saveRental(rentalDTO.getDays(), film, customer, rental, price);
+    }
+
+    private Rental saveRental(int days, Film film, Customer customer, Rental rental, Float price) {
         rental.setFilm(film);
         rental.setCustomer(customer);
         rental.setPrice(price);
+        rental.setDays(days);
+        rental.setInitialDate(new Date());
 
-        return rental;
+        return rentalRepository.save(rental);
     }
 
     private Customer getCustomerAndCalculateBonusPoints(Long customerId, int bonusPoints) {
@@ -88,9 +96,9 @@ public class RentalService {
 
 
     public Rental getRental(Long id) {
-        Rental rental = rentalRepository.findById(id)
+        return rentalRepository.findById(id)
                 .orElseThrow(() -> new RentalNotFoundException(id));
-
-        return new Rental();
     }
+
+
 }
